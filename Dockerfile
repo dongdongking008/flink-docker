@@ -9,8 +9,6 @@ RUN mkdir /build && cd /build && git clone https://github.com/apache/flink && \
 FROM openjdk:8-jre
 LABEL maintainer="xiaodong.chen <dongdongking008@163.com>"
 
-ADD config/sources.list /etc/apt/sources.list
-
 # Prepare environment
 ENV FLINK_HOME=/opt/flink
 ENV PATH=$FLINK_HOME/bin:$PATH
