@@ -2,7 +2,7 @@
 FROM maven:3-jdk-8 as flink-builder
 
 RUN mkdir /build && cd /build && git clone https://github.com/apache/flink && \
-    cd flink &&\
+    cd flink && git checkout release-1.12.0-rc1 && \
     mvn clean install -DskipTests -Dfast -e
 
 # step: package
