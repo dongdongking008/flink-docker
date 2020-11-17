@@ -9,7 +9,7 @@ ENV MAVEN_HOME=/usr/share/maven
 ENV MAVEN_CONFIG=/root/.m2
 
 ENV SCALA_VERSION=2.11
-ENV RELEASE_VERSION=1.12.0-rc1
+ENV RELEASE_VERSION=1.12.0
 ENV SKIP_GPG=true
 RUN mkdir /build && cd /build && git clone https://github.com/apache/flink && \
     cd flink && git checkout release-1.12.0-rc1 && \
