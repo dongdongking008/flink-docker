@@ -1,7 +1,11 @@
 # step: build flink
-FROM maven:3.2-jdk-8 as flink-builder
+FROM openjdk:11-jdk as flink-builder
 
-RUN apt-get update && apt-get -y --force-yes dselect-upgrade openjdk-8-jdk
+RUN MAVEN_VERSION=3.2.5 USER_HOME_DIR=/root /bin/sh -c mkdir -p /usr/share/maven /usr/share/maven/ref /root/.m2 && \
+    curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz |\
+    tar -xzC /usr/share/maven --strip-components=1 && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+ENV MAVEN_HOME=/usr/share/maven
+ENV MAVEN_CONFIG=/root/.m2
 
 ENV SCALA_VERSION=2.11
 ENV RELEASE_VERSION=1.12.0-rc1
