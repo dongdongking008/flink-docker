@@ -13,10 +13,9 @@ ENV RELEASE_VERSION=1.12.0
 ENV SKIP_GPG=true
 RUN mkdir /build && cd /build && git clone https://github.com/apache/flink && \
     cd flink && git checkout release-1.12.0-rc1
-RUN FLINK_DIR=`pwd` && RELEASE_DIR=${FLINK_DIR}/tools/releasing/release && FLAGS="-Dscala-2.11" &&\
-    mvn clean package $FLAGS -Prelease -pl flink-dist -am -Dgpg.skip -Dcheckstyle.skip=true -DskipTests &&\
+RUN mvn clean package -Dscala-2.11 -Prelease -pl flink-dist -am -Dgpg.skip -Dcheckstyle.skip=true -DskipTests &&\
     cd flink-dist/target/flink-${RELEASE_VERSION}-bin &&\
-    ${FLINK_DIR}/tools/releasing/collect_license_files.sh ./flink-${RELEASE_VERSION} ./flink-${RELEASE_VERSION}
+    /build/flink/tools/releasing/collect_license_files.sh ./flink-${RELEASE_VERSION} ./flink-${RELEASE_VERSION}
 
 # step: package
 FROM openjdk:8-jre
