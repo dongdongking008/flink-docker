@@ -1,7 +1,7 @@
 # step: build flink
 FROM maven:3.2-jdk-8 as flink-builder
 
-RUN apt-get update && apt-get -y dselect-upgrade openjdk-8-jdk
+RUN apt-get update && apt-get -y --force-yes dselect-upgrade openjdk-8-jdk
 
 ENV SCALA_VERSION=2.11
 ENV RELEASE_VERSION=1.12.0-rc1
