@@ -1,5 +1,5 @@
 # step: build flink
-FROM maven:3.2-jdk-8 as flink-builder
+FROM maven:3.3-jdk-8 as flink-builder
 
 ENV SCALA_VERSION=2.11
 ENV RELEASE_VERSION=1.12.0-rc1
