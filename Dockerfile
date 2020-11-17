@@ -1,5 +1,5 @@
 # step: build flink
-FROM openjdk:11-jdk as flink-builder
+FROM openjdk:8-jdk as flink-builder
 
 ENV MAVEN_VERSION=3.2.5
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref /root/.m2 && \
