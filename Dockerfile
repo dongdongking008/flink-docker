@@ -12,8 +12,11 @@ ENV SCALA_VERSION=2.11
 ENV RELEASE_VERSION=1.12.0
 ENV SKIP_GPG=true
 RUN mkdir /build && cd /build && git clone https://github.com/apache/flink && \
-    cd flink && git checkout release-1.12.0-rc1 && \
-    cd tools && releasing/create_binary_release.sh
+    cd flink && git checkout release-1.12.0-rc1
+RUN FLINK_DIR=`pwd` && RELEASE_DIR=${FLINK_DIR}/tools/releasing/release && FLAGS="-Dscala-2.11" &&\
+    mvn clean package $FLAGS -Prelease -pl flink-dist -am -Dgpg.skip -Dcheckstyle.skip=true -DskipTests &&\
+    cd flink-dist/target/flink-${RELEASE_VERSION}-bin &&\
+    ${FLINK_DIR}/tools/releasing/collect_license_files.sh ./flink-${RELEASE_VERSION} ./flink-${RELEASE_VERSION}
 
 # step: package
 FROM openjdk:8-jre
@@ -27,7 +30,7 @@ RUN groupadd --system --gid=9999 flink && \
 WORKDIR $FLINK_HOME
 
 # Install Flink
-COPY --from=flink-builder /build/flink/tools/releasing/release/* ./
+COPY --from=flink-builder /build/flink/flink-dist/target/flink-1.12.0-bin/flink-1.12.0 ./
 
 RUN chown -R flink:flink .
 
