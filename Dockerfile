@@ -5,8 +5,7 @@ ENV SCALA_VERSION=2.11
 ENV RELEASE_VERSION=1.12.0-rc1
 ENV SKIP_GPG=true
 RUN mkdir /build && cd /build && git clone https://github.com/apache/flink && \
-    cd flink && git checkout release-1.12.0-rc1 && \ 
-    mvn clean install -DskipTests -Dfast -e && \
+    cd flink && git checkout release-1.12.0-rc1 && \
     cd tools && releasing/create_binary_release.sh
 
 # step: package
