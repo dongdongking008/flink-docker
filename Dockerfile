@@ -1,7 +1,7 @@
 # step: build flink
 FROM openjdk:11-jdk as flink-builder
 
-RUN MAVEN_VERSION=3.2.5 USER_HOME_DIR=/root /bin/sh -c mkdir -p /usr/share/maven /usr/share/maven/ref /root/.m2 && \
+RUN |2 MAVEN_VERSION=3.2.5 USER_HOME_DIR=/root /bin/sh -c "mkdir -p /usr/share/maven /usr/share/maven/ref /root/.m2" && \
     curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz |\
     tar -xzC /usr/share/maven --strip-components=1 && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME=/usr/share/maven
