@@ -16,6 +16,8 @@ RUN cd /build/flink &&\
     mvn clean package -Dscala-2.11 -Prelease -pl flink-dist -am -Dgpg.skip -Dcheckstyle.skip=true -DskipTests &&\
     cd flink-dist/target/flink-${RELEASE_VERSION}-bin &&\
     /build/flink/tools/releasing/collect_license_files.sh ./flink-${RELEASE_VERSION} ./flink-${RELEASE_VERSION}
+RUN cd /build/flink/flink-dist/target/flink-1.12.0-bin/flink-1.12.0 &&\
+    chown -R flink:flink .
 
 # step: package
 FROM openjdk:8-jre
@@ -30,8 +32,6 @@ WORKDIR $FLINK_HOME
 
 # Install Flink
 COPY --from=flink-builder /build/flink/flink-dist/target/flink-1.12.0-bin/flink-1.12.0 ./
-
-RUN chown -R flink:flink .
 
 # Configure container
 COPY docker-entrypoint.sh /
