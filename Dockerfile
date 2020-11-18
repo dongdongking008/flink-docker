@@ -16,6 +16,11 @@ RUN cd /build/flink &&\
     mvn clean package -Dscala-2.11 -Prelease -pl flink-dist -am -Dgpg.skip -Dcheckstyle.skip=true -DskipTests &&\
     cd flink-dist/target/flink-${RELEASE_VERSION}-bin &&\
     /build/flink/tools/releasing/collect_license_files.sh ./flink-${RELEASE_VERSION} ./flink-${RELEASE_VERSION}
+
+ENV FLINK_HOME=/opt/flink
+RUN groupadd --system --gid=9999 flink && \
+    useradd --system --home-dir $FLINK_HOME --uid=9999 --gid=flink flink
+    
 RUN cd /build/flink/flink-dist/target/flink-1.12.0-bin/flink-1.12.0 &&\
     chown -R flink:flink .
 
